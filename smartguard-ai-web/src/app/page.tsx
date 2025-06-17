@@ -3,7 +3,7 @@ import Layout from '@/components/layout/Layout';
 import HeroSection from '@/components/sections/HeroSection';
 import FeaturesHighlight from '@/components/sections/FeaturesHighlight';
 import Button from '@/components/ui/Button';
-import { fetchHomepageData, fetchFeaturesPreview } from '@/lib/api';
+import { fetchHomepageData, fetchFeaturesPreview, fetchSiteSettings } from '@/lib/api';
 
 interface Feature {
   id: number;
@@ -27,11 +27,13 @@ export default async function HomePage() {
   // Fetch data on the server
   let homepageContent: HomepageData;
   let features: Feature[];
+  let settings;
 
   try {
-    const [homepageResult, featuresResult] = await Promise.all([
+    const [homepageResult, featuresResult, settingsResult] = await Promise.all([
       fetchHomepageData(),
-      fetchFeaturesPreview(3)
+      fetchFeaturesPreview(3),
+      fetchSiteSettings()
     ]);
 
     homepageContent = homepageResult || {
@@ -64,6 +66,7 @@ export default async function HomePage() {
         iconUrl: '/icons/privacy-lock.png'
       }
     ];
+    settings = settingsResult;
   } catch (error) {
     console.error('Error fetching data:', error);
     
@@ -98,6 +101,11 @@ export default async function HomePage() {
         iconUrl: '/icons/privacy-lock.png'
       }
     ];
+    settings = {
+      primary_bg: '#181A20',
+      primary_text: '#FFFFFF',
+      hero_bg_image: '/static/hero-dark.jpg',
+    };
   }
 
   return (
@@ -112,6 +120,9 @@ export default async function HomePage() {
         subtitle={homepageContent.heroSubtitle}
         ctaText={homepageContent.heroCtaText}
         logoSrc="/logos/smartguard_ai_minimal_1.png"
+        heroBgImage={settings.hero_bg_image}
+        primaryBg={settings.primary_bg}
+        primaryText={settings.primary_text}
       />
 
       {/* Features Highlight */}

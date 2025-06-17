@@ -7,16 +7,19 @@ interface HeroSectionProps {
   subtitle: string;
   ctaText: string;
   logoSrc: string;
+  heroBgImage: string;
+  primaryBg: string;
+  primaryText: string;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ title, subtitle, ctaText, logoSrc }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ title, subtitle, ctaText, logoSrc, heroBgImage, primaryBg, primaryText }) => {
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden">
+    <section className="relative py-20 md:py-32 overflow-hidden" style={{ background: primaryBg }}>
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/construction.jpg"
-          alt="Modern construction site with skyscrapers"
+          src={heroBgImage}
+          alt="Hero Background"
           fill
           className="object-cover object-center brightness-50"
           priority
@@ -33,10 +36,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, subtitle, ctaText, log
           height={120}
           className="mb-8"
         />
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ color: primaryText }}>
           {title}
         </h1>
-        <p className="text-xl md:text-2xl text-slate-200 mb-8 max-w-3xl">
+        <p className="text-xl md:text-2xl mb-8 max-w-3xl" style={{ color: primaryText }}>
           {subtitle}
         </p>
         <Button variant="primary" size="large">

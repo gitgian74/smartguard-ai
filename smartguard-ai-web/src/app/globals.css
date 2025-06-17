@@ -6,6 +6,12 @@
   --navy-sofisticato: #60a5fa; /* Bright blue */
   --verde-tecnologico: #38bdf8; /* Light blue */
   --accent-red: #ef4444;
+  --primary-bg: #181A20;
+  --primary-text: #FFFFFF;
+  --secondary-text: #B0B3B8;
+  --accent: #059669;
+  --button-bg: #2563eb;
+  --button-text: #fff;
 }
 
 @theme inline {

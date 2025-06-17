@@ -39,6 +39,16 @@ interface ContactSubmission {
   privacyAccepted: boolean;
 }
 
+export interface SiteSettings {
+  primary_bg: string;
+  primary_text: string;
+  secondary_text: string;
+  accent: string;
+  button_bg: string;
+  button_text: string;
+  hero_bg_image: string;
+}
+
 // Funzione helper per le chiamate API
 async function apiCall<T>(endpoint: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
   try {
@@ -177,18 +187,31 @@ export async function submitContactForm(data: ContactSubmission): Promise<{ succ
 }
 
 // Settings API
-export async function fetchSiteSettings(): Promise<Record<string, string>> {
+export async function fetchSiteSettings(): Promise<SiteSettings> {
   try {
-    const response = await apiCall<Record<string, string>>('/settings');
-    
+    const response = await apiCall<SiteSettings>('/settings');
     if (response.success && response.data) {
-      return response.data;
+      return response.data as SiteSettings;
     }
-    
-    return {};
+    return {
+      primary_bg: '#181A20',
+      primary_text: '#FFFFFF',
+      secondary_text: '#B0B3B8',
+      accent: '#059669',
+      button_bg: '#2563eb',
+      button_text: '#fff',
+      hero_bg_image: '/static/hero-dark.jpg',
+    };
   } catch (error) {
-    console.error('Error fetching site settings:', error);
-    return {};
+    return {
+      primary_bg: '#181A20',
+      primary_text: '#FFFFFF',
+      secondary_text: '#B0B3B8',
+      accent: '#059669',
+      button_bg: '#2563eb',
+      button_text: '#fff',
+      hero_bg_image: '/static/hero-dark.jpg',
+    };
   }
 }
 
